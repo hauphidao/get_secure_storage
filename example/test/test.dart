@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_secure_storage/get_secure_storage.dart';
 
 void main() {
-  final counter = 'counter';
-  final isDarkMode = 'isDarkMode';
+  const counter = 'counter';
+  const isDarkMode = 'isDarkMode';
   GetSecureStorage box = GetSecureStorage();
   test('GetSecureStorage read and write operation', () {
     box.write(counter, 0);

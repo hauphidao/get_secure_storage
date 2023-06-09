@@ -69,7 +69,7 @@ class GetSecureStorage {
     try {
       await _concrete.init(_initialData, _encrypt, _decrypt);
     } catch (err) {
-      throw err;
+      rethrow;
     }
   }
 
@@ -102,7 +102,9 @@ class GetSecureStorage {
           secretKey: secretKey!,
         );
         return cleartxt;
-      } catch (e) {}
+      } catch (e) {
+        // ignore errors here
+      }
       return '';
     } else {
       return value;
@@ -151,14 +153,14 @@ class GetSecureStorage {
     return _concrete.subject.addListener(value);
   }
 
-  Map<Function, Function> _keyListeners = <Function, Function>{};
+  final Map<Function, Function> _keyListeners = <Function, Function>{};
 
   VoidCallback listenKey(String key, ValueSetter callback) {
-    final VoidCallback listen = () {
+    listen() {
       if (changes.keys.first == key) {
         callback(changes[key]);
       }
-    };
+    }
 
     _keyListeners[callback] = listen;
     return _concrete.subject.addListener(listen);
@@ -244,4 +246,4 @@ class Microtask {
 }
 
 typedef KeyCallback = Function(String);
-typedef Future<String> StringCallback(String input);
+typedef StringCallback = Future<String> Function(String input);

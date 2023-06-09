@@ -3,7 +3,7 @@ import 'package:get_secure_storage/get_secure_storage.dart';
 
 void main() async {
   await GetSecureStorage.init(password: 'password');
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatefulWidget {
@@ -26,11 +26,11 @@ class _AppState extends State<App> {
     return MaterialApp(
       theme: isDark ? ThemeData.dark() : ThemeData.light(),
       home: Scaffold(
-        appBar: AppBar(title: Text("Get Storage")),
+        appBar: AppBar(title: const Text("GetSecureStorage")),
         body: Center(
           child: SwitchListTile(
             value: isDark,
-            title: Text("Touch to change ThemeMode"),
+            title: const Text("Touch to change ThemeMode"),
             onChanged: changeTheme,
           ),
         ),

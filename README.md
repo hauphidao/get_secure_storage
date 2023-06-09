@@ -1,8 +1,11 @@
 # get_secure_storage
-A secure version of GetStorage, which is a fast, extra light and synchronous key-value in memory, which backs up data to disk at each operation.
-It is written entirely in Dart and is based on the Cryptography dart package.
+A secure version of GetStorage, which is a fast, extra light and synchronous key-value in memory, which backs up data to disk at each operation. It is written entirely in Dart and is based on the Cryptography dart package.
 
-Supports Android, iOS, Web, Mac, Linux, and fuchsia and Windows**. 
+The cryptography library used is https://pub.dev/packages/cryptography
+
+The algorithm used is 128bit AES-CTR with MAC sha256
+
+Supports Android, iOS, Web, Mac, Linux, and Windows. 
 Can store String, int, double, Map and List
 
 ### Add to your pubspec:
