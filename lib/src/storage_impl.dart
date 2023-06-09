@@ -73,8 +73,14 @@ class GetSecureStorage {
     }
   }
 
-  bool _isListInt(dynamic jsonObj) =>
-      jsonObj is List && jsonObj.every((element) => element is int);
+  List<int> _hexStringToList(String hexString) {
+    List<int> data = [];
+    for (int i = 0; i < hexString.length; i += 2) {
+      int byte = int.parse(hexString.substring(i, i + 2), radix: 16);
+      data.add(byte);
+    }
+    return data;
+  }
 
   Future<String> _decrypt(String value) async {
     if (algorithm != null) {
@@ -86,15 +92,16 @@ class GetSecureStorage {
         return value;
       }
 
-      if (!_isListInt(jsonPayload[kNonce]) ||
-          !_isListInt(jsonPayload[kCipherText]) ||
-          !_isListInt(jsonPayload[kMac])) {
+      if (jsonPayload[kNonce] is! String ||
+          jsonPayload[kCipherText] is! String ||
+          jsonPayload[kMac] is! String) {
         return '';
       }
+
       final secretBox = SecretBox(
-        jsonPayload[kCipherText].cast<int>(),
-        nonce: jsonPayload[kNonce].cast<int>(),
-        mac: Mac(jsonPayload[kMac].cast<int>()),
+        _hexStringToList(jsonPayload[kCipherText]),
+        nonce: _hexStringToList(jsonPayload[kNonce]),
+        mac: Mac(_hexStringToList(jsonPayload[kMac])),
       );
       try {
         final cleartxt = await algorithm!.decryptString(
@@ -103,12 +110,15 @@ class GetSecureStorage {
         );
         return cleartxt;
       } catch (e) {
-        // ignore errors here
+        rethrow;
       }
-      return '';
     } else {
       return value;
     }
+  }
+
+  String _listToHexString(List<int> bytes) {
+    return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
   }
 
   Future<String> _encrypt(String value) async {
@@ -118,12 +128,21 @@ class GetSecureStorage {
         secretKey: secretKey!,
       );
       final jsonPayload = {
-        kNonce: secretBox.nonce,
-        kMac: secretBox.mac.bytes,
-        kCipherText: secretBox.cipherText,
+        kNonce: _listToHexString(secretBox.nonce),
+        kMac: _listToHexString(secretBox.mac.bytes),
+        kCipherText: _listToHexString(secretBox.cipherText),
       };
       return json.encode(jsonPayload);
     } else {
+      final dynamic jsonPayload = json.decode(value) ?? {};
+      if (jsonPayload.containsKey(kCipherText) ||
+          jsonPayload.containsKey(kMac) ||
+          jsonPayload.containsKey(kNonce)) {
+        jsonPayload.remove(kCipherText);
+        jsonPayload.remove(kMac);
+        jsonPayload.remove(kNonce);
+        return json.encode(jsonPayload);
+      }
       return value;
     }
   }

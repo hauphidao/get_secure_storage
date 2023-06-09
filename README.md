@@ -36,23 +36,23 @@ import 'package:get_secure_storage/get_secure_storage.dart';
 ### Initialize storage driver with await:
 ```dart
 main() async {
-  await GetSecureStorage.init(password: 'password');
+  await GetSecureStorage.init(password: 'strongpassword');
   runApp(App());
 }
 ```
 #### use GetSecureStorage through an instance or use directly `GetSecureStorage().read('key')`
 ```dart
-final box = GetSecureStorage();
+final box = GetSecureStorage(password: 'strongpassword');
 ```
 #### To write information you must use `write` :
 ```dart
-box.write('quote', 'GetX is the best');
+box.write('quote', 'GetSecureStorage is the best');
 ```
 
 #### To read values you use `read`:
 ```dart
 print(box.read('quote'));
-// out: GetX is the best
+// out: GetSecureStorage is the best
 
 ```
 #### To remove a key, you can use `remove`:
@@ -88,18 +88,18 @@ box.erase();
 #### If you want to create different containers, simply give it a name. You can listen to specific containers, and also delete them.
 
 ```dart
-GetSecureStorage g = GetSecureStorage(container:'MyStorage', password: 'password');
+GetSecureStorage g = GetSecureStorage(container:'MyStorage', password: 'strongpassword');
 ```
 
 #### To initialize specific container:
 ```dart
-await GetSecureStorage.init(container:'MyStorage', password: 'password');
+await GetSecureStorage.init(container:'MyStorage', password: 'strongpassword');
 ```
 
 ## SharedPreferences Implementation
 ```dart
 class MyPref {
-  static final _otherBox = () => GetSecureStorage(container:'MyPref', password: 'password');
+  static final _otherBox = () => GetSecureStorage(container:'MyPref', password: 'strongpassword');
 
   final username = ''.val('username');
   final age = 0.val('age');

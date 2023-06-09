@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_secure_storage/get_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -100,7 +100,10 @@ class StorageImpl {
       Get.log('Corrupted box, recovering backup file', isError: true);
       final file = await _getFile(true);
 
-      final content = await _decrypt((await file.readAsString())..trim());
+      dynamic content = {};
+      try {
+        content = await _decrypt((await file.readAsString())..trim());
+      } on Exception catch (_) {}
 
       if (content.isEmpty) {
         subject.value = {};
