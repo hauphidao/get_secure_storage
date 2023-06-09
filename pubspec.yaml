@@ -1,6 +1,6 @@
 name: get_secure_storage
 description: A secure version of get_storage, which was a fast, extra light and synchronous key-value storage written entirely in Dart
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/gslender/get_secure_storage
 
 environment:
