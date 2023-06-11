@@ -127,6 +127,13 @@ class StorageImpl {
     return _randomAccessfile!;
   }
 
+  _deleteFile() async {
+    final fileDb = await _fileDb(isBackup: false);
+    await fileDb.delete();
+    final backupDb = await _fileDb(isBackup: true);
+    await backupDb.delete();
+  }
+
   Future<File> _getFile(bool isBackup) async {
     final fileDb = await _fileDb(isBackup: isBackup);
     if (!fileDb.existsSync()) {
@@ -156,5 +163,10 @@ class StorageImpl {
     return isBackup
         ? '$path$separator$fileName.bak'
         : '$path$separator$fileName.gs';
+  }
+
+  static deleteContainer(container, [String? path]) async {
+    final tmp = StorageImpl(container, path);
+    await tmp._deleteFile();
   }
 }

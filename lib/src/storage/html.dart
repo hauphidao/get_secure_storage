@@ -25,6 +25,8 @@ class StorageImpl {
       ..changeValue("", null);
   }
 
+  static deleteContainer(container, [String? path]) {}
+
   Future<bool> _exists() async {
     return localStorage.containsKey(fileName);
   }

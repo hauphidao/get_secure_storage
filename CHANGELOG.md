@@ -1,3 +1,5 @@
+## [1.0.3] 
+- Add method to deleteContainer
 
 ## [1.0.2] 
 - Update storage to use hexString instead of a string of List<int>

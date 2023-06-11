@@ -65,6 +65,9 @@ class GetSecureStorage {
         .initStorage;
   }
 
+  static deleteContainer(String container, [String? path]) =>
+      StorageImpl.deleteContainer(container, path);
+
   Future<void> _init() async {
     try {
       await _concrete.init(_initialData, _encrypt, _decrypt);
