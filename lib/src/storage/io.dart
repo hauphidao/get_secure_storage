@@ -127,6 +127,14 @@ class StorageImpl {
     return _randomAccessfile!;
   }
 
+  Future<bool> _hasFile() async {
+    final fileDb = await _fileDb(isBackup: false);
+    if (fileDb.existsSync()) return true;
+    final backupDb = await _fileDb(isBackup: true);
+    if (backupDb.existsSync()) return true;
+    return false;
+  }
+
   _deleteFile() async {
     final fileDb = await _fileDb(isBackup: false);
     await fileDb.delete();
@@ -168,5 +176,10 @@ class StorageImpl {
   static deleteContainer(container, [String? path]) async {
     final tmp = StorageImpl(container, path);
     await tmp._deleteFile();
+  }
+
+  static Future<bool> hasContainer(container, [String? path]) async {
+    final tmp = StorageImpl(container, path);
+    return tmp._hasFile();
   }
 }

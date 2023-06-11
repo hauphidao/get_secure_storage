@@ -65,6 +65,9 @@ class GetSecureStorage {
         .initStorage;
   }
 
+  static Future<bool> hasContainer(String container, [String? path]) =>
+      StorageImpl.hasContainer(container, path);
+
   static deleteContainer(String container, [String? path]) =>
       StorageImpl.deleteContainer(container, path);
 

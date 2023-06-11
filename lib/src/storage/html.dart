@@ -25,6 +25,7 @@ class StorageImpl {
       ..changeValue("", null);
   }
 
+  static Future<bool> hasContainer(container, [String? path]) async => true;
   static deleteContainer(container, [String? path]) {}
 
   Future<bool> _exists() async {

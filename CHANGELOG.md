@@ -1,3 +1,6 @@
+## [1.0.4] 
+- Add method to hasContainer
+
 ## [1.0.3] 
 - Add method to deleteContainer
 
