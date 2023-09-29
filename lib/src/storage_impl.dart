@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart' hide Key;
-import 'package:get/utils.dart';
 import 'package:cryptography/cryptography.dart';
+import 'package:get/utils.dart';
 
+import 'sdk/flutter.dart' if (dart.library.ui) 'platform/dart.dart';
 import 'storage/html.dart' if (dart.library.io) 'storage/io.dart';
 import 'value.dart';
+
+typedef VoidCallback = void Function();
+typedef ValueSetter<T> = void Function(T value);
 
 /// Instantiate GetSecureStorage to access storage driver apis
 class GetSecureStorage {
@@ -60,7 +63,7 @@ class GetSecureStorage {
   /// Start the storage drive. It's important to use await before calling this API, or side effects will occur.
   static Future<bool> init(
       {String container = 'GetSecureStorage', String? password}) {
-    WidgetsFlutterBinding.ensureInitialized();
+    initImpl();
     return GetSecureStorage(container: container, password: password)
         .initStorage;
   }
