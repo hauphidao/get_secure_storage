@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_secure_storage/get_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,8 +15,7 @@ class StorageImpl {
   StringCallback _encrypt = (input) async => input;
   StringCallback _decrypt = (input) async => input;
 
-  final ValueStorage<Map<String, dynamic>> subject =
-      ValueStorage<Map<String, dynamic>>(<String, dynamic>{});
+  final ValueStorage<Map<String, dynamic>> subject = ValueStorage<Map<String, dynamic>>(<String, dynamic>{});
 
   RandomAccessFile? _randomAccessfile;
 
@@ -67,8 +66,7 @@ class StorageImpl {
     return subject.value!.values as T;
   }
 
-  Future<void> init(Map<String, dynamic>? initialData, StringCallback encrypt,
-      StringCallback decrypt) async {
+  Future<void> init(Map<String, dynamic>? initialData, StringCallback encrypt, StringCallback decrypt) async {
     _encrypt = encrypt;
     _decrypt = decrypt;
     subject.value = initialData ?? <String, dynamic>{};
@@ -168,9 +166,7 @@ class StorageImpl {
   Future<String> _getPath(bool isBackup, String? path) async {
     final isWindows = GetPlatform.isWindows;
     final separator = isWindows ? '\\' : '/';
-    return isBackup
-        ? '$path$separator$fileName.bak'
-        : '$path$separator$fileName.gs';
+    return isBackup ? '$path$separator$fileName.bak' : '$path$separator$fileName.gs';
   }
 
   static deleteContainer(container, [String? path]) async {

@@ -3,9 +3,10 @@ import 'dart:convert';
 
 import 'package:cryptography/cryptography.dart';
 import 'package:get/utils.dart';
+// import 'package:get_secure_storage/src/storage/html.dart';
 
-import 'sdk/flutter.dart' if (dart.library.ui) 'platform/dart.dart';
-import 'storage/html.dart' if (dart.library.io) 'storage/io.dart';
+import 'package:get_secure_storage/src/sdk/flutter.dart' if (dart.library.ui) 'sdk/dart.dart';
+import 'package:get_secure_storage/src/storage/html.dart' if (dart.library.io) 'storage/io.dart';
 import 'value.dart';
 
 typedef VoidCallback = void Function();
@@ -56,7 +57,7 @@ class GetSecureStorage {
 
   /// Start the storage drive. It's important to use await before calling this API, or side effects will occur.
   static Future<bool> init({String container = 'GetSecureStorage', String? password}) {
-    initImpl();
+    // initImpl();
     return GetSecureStorage(container: container, password: password).initStorage;
   }
 
