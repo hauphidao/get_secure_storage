@@ -51,7 +51,7 @@ box.write('quote', 'GetSecureStorage is the best');
 
 #### To read values you use `read`:
 ```dart
-print(box.read('quote'));
+;
 // out: GetSecureStorage is the best
 
 ```
@@ -65,7 +65,7 @@ box.remove('quote');
 ```dart
 Function? disposeListen;
 disposeListen = box.listen((){
-  print('box changed');
+  ;
 });
 ```
 #### If you subscribe to events, be sure to dispose them when using:
@@ -76,7 +76,7 @@ disposeListen?.call();
 
 ```dart
 box.listenKey('key', (value){
-  print('new key is $value');
+  ;
 });
 ```
 
